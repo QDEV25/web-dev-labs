@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 4 - Pure Functions, Recursion, Map/Filter/Reduce</title>
+</head>
+<body>
+    <h1>Lab 4: Functional JavaScript</h1>
+    <p>Open console (Cmd+Option+J) to see outputs.</p>
+    <script>
+        // ========== TASK 1 ==========
+        console.log("=== TASK 1 ===");
+        // Part 2: Pure function
+        function calculatePricePure(price, tax) {
+            return price + (price * tax);
+        }
+        console.log("Pure: 100 with tax 0.2 =", calculatePricePure(100, 0.2));
+        
+        // Part 3: Impure function
+        let cart = [];
+        function addToCart(productName) {
+            cart.push(productName);
+            console.log(`Added "${productName}" to cart`);
+        }
+        addToCart("Laptop");
+        addToCart("Mouse");
+        console.log("Cart:", cart);
+
+        // ========== TASK 2 ==========
+        console.log("\n=== TASK 2 ===");
+        function factorial(n) {
+            if (n < 0) return null;
+            if (n === 0) return 1;
+            return n * factorial(n - 1);
+        }
+        console.log("factorial(5):", factorial(5));
+        console.log("factorial(0):", factorial(0));
+        console.log("factorial(-3):", factorial(-3));
+
+        // ========== TASK 3 ==========
+        console.log("\n=== TASK 3 ===");
+        const numbers = [5, 12, 8, 130, 44, 3];
+        const result = numbers.filter(n => n > 10).map(n => n * n);
+        console.log("Squares of numbers > 10:", result); // [144, 16900, 1936]
+
+        // ========== TASK 4 ==========
+        console.log("\n=== TASK 4 ===");
+        const orders = [
+            { product: "Ноутбук", price: 50000, quantity: 1 },
+            { product: "Мышь", price: 1500, quantity: 2 },
+            { product: "Клавиатура", price: 3000, quantity: 1 }
+        ];
+        const totalCost = orders.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        console.log("Total cost:", totalCost); // 56000
+
+        // ========== TASK 5 ==========
+        console.log("\n=== TASK 5 ===");
+        // Currying with extra empty call pattern
+        function multiply(a) {
+            return function(b) {
+                return function(c) {
+                    if (c === undefined) return a * b;
+                    return a * b * c;
+                };
+            };
+        }
+        console.log("multiply(2)(3)():", multiply(2)(3)());   // 6
+        console.log("multiply(2)(3)(4):", multiply(2)(3)(4)); // 24
+    </script>
+</body>
+</html>

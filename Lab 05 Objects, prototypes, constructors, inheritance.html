@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 5 - Prototypes and Inheritance</title>
+</head>
+<body>
+    <h1>Lab 5: Objects, Constructors, Prototypes</h1>
+    <p>Open Console (Cmd+Option+J) to see results</p>
+    <script>
+        // ========== TASK 1 ==========
+        console.log("=== TASK 1 ===");
+        const Book = {
+            title: "The Hobbit",
+            author: "J.R.R. Tolkien",
+            year: 1937,
+            pages: 310,
+            getInfo: function() {
+                return `${this.title} by ${this.author}, ${this.year} (${this.pages} pages)`;
+            }
+        };
+        console.log(Book.getInfo());
+        Book.publisher = "Allen & Unwin";
+        console.log("Publisher:", Book.publisher);
+        delete Book.pages;
+        console.log("Has 'title' (in):", "title" in Book);
+        console.log("Has 'title' (hasOwnProperty):", Book.hasOwnProperty("title"));
+        console.log("Has 'toString' (in):", "toString" in Book);
+        console.log("Has 'toString' (hasOwnProperty):", Book.hasOwnProperty("toString"));
+
+        // ========== TASK 2 ==========
+        console.log("\n=== TASK 2 ===");
+        function Student(name, group, grades) {
+            this.name = name;
+            this.group = group;
+            this.grades = grades;
+        }
+        Student.prototype.getAverage = function() {
+            let sum = 0;
+            for (let i = 0; i < this.grades.length; i++) sum += this.grades[i];
+            return sum / this.grades.length;
+        };
+        Student.prototype.isPassed = function() {
+            return this.getAverage() >= 60;
+        };
+        const s1 = new Student("Макар", "A-01", [85,90,78]);
+        const s2 = new Student("Анна", "A-01", [45,55,60]);
+        console.log(`${s1.name}: avg=${s1.getAverage()}, passed=${s1.isPassed()}`);
+        console.log(`${s2.name}: avg=${s2.getAverage()}, passed=${s2.isPassed()}`);
+        console.log("Methods shared?", s1.getAverage === s2.getAverage); // true
+
+        // ========== TASK 3 ==========
+        console.log("\n=== TASK 3 ===");
+        function Animal(name, sound) {
+            this.name = name;
+            this.sound = sound;
+        }
+        Animal.prototype.speak = function() {
+            console.log(`${this.name} says ${this.sound}`);
+        };
+        function Dog(name) {
+            Animal.call(this, name, "Woof");
+        }
+        Dog.prototype = Object.create(Animal.prototype);
+        Dog.prototype.constructor = Dog;
+        Dog.prototype.speak = function() {
+            Animal.prototype.speak.call(this);
+            console.log(`${this.name} wags tail!`);
+        };
+        const rex = new Dog("Rex");
+        rex.speak();
+        console.log("rex instanceof Dog:", rex instanceof Dog);
+        console.log("rex instanceof Animal:", rex instanceof Animal);
+        console.log("Prototype chain check:", Object.getPrototypeOf(rex) === Dog.prototype);
+    </script>
+</body>
+</html>

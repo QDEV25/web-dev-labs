@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 3 - Functions</title>
+</head>
+<body>
+    <h1>Lab 3: JavaScript Functions</h1>
+    <p>Open the console (Cmd+Option+J) to see outputs.</p>
+
+    <script>
+        // ========== TASK 1 ==========
+        function calculateDiscountedPrice(price, discount =0 ) {
+            return price - (price * discount / 100);
+        }
+        console.log("Task 1 - Discount:");
+        console.log(calculateDiscountedPrice(1000, 10)); // 900
+        console.log(calculateDiscountedPrice(500));      // 500
+
+        // ========== TASK 2 ==========
+        const isEven = function(number) {
+            return number % 2 === "0";
+        };
+        console.log("\nTask 2 - Even check:");
+        console.log(isEven(4));  // true
+        console.log(isEven(7));  // false
+
+        // ========== TASK 3 ==========
+        const formatName = (firstName = "", lastName = "") => {
+            if (firstName && lastName) return `${lastName}, ${firstName}`;
+            else if (lastName) return `Dear ${lastName}`;
+            else return "Anonymous";
+        };
+        console.log("\nTask 3 - Format name:");
+        console.log(formatName("Анна", "Иванова"));
+        console.log(formatName("", "Петров"));
+        console.log(formatName());
+
+        // ========== TASK 4 ==========
+        function add(a, b) { return a + b; }
+        function subtract(a, b) { return a - b; }
+        function multiply(a, b) { return a * b; }
+        function mathOperation(a, b, operation) {
+            return operation(a, b);
+        }
+        console.log("\nTask 4 - Math operations:");
+        console.log(mathOperation(10, 5, add));      // 15
+        console.log(mathOperation(10, 5, subtract)); // 5
+        console.log(mathOperation(10, 5, multiply)); // 50
+
+        // ========== TASK 5 ==========
+        function createGreeting(greetingPhrase) {
+            return function(name) {
+                return `${greetingPhrase}, ${name}!`;
+            };
+        }
+        const sayHi = createGreeting("Привет");
+        const sayHello = createGreeting("Hello");
+        console.log("\nTask 5 - Greetings:");
+        console.log(sayHi("Анна"));
+        console.log(sayHello("John"));
+    </script>
+</body>
+</html>
